@@ -1,0 +1,24 @@
+[
+    {
+        "manufacture": "Anker",
+        "name": "hoge",
+        "model": "ABC-123",
+        "image": "https://",
+        "images": [
+            "https://",
+            "https://"
+        ],
+        "color": [
+            "black", "red", "white"
+        ],
+        "url": "https://",
+        "price": 12345,
+        "detail": [
+            {
+                "key1": "value",
+                "key2": "value",
+                "key3": "value"
+            }
+        ]
+    }
+]
