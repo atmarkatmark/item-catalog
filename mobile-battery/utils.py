@@ -4,6 +4,7 @@ import requests
 import os
 import base64
 from hashlib import sha1
+from time import sleep
 
 def load_cache(path: str):
     '''
@@ -37,6 +38,8 @@ def fetch(url:str, cache_dir:str='cache'):
         data = load_cache(cache_path)
     # キャッシュがなかったらリモートから取得する
     else:
+        print(f'fetching {url}')
+        sleep(1)
         res = requests.get(url, verify=False)
         data = res.text
         with open(cache_path, 'w', encoding='utf-8') as f:

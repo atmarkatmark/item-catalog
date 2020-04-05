@@ -13,6 +13,7 @@
         ],
         "url": "https://",
         "price": 12345,
+        "pd": true,
         "detail": [
             {
                 "key1": "value",

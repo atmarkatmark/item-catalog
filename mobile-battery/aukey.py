@@ -3,6 +3,7 @@
 # pip install beautifulsoup4 requests
 from bs4 import BeautifulSoup as bs
 from urllib.parse import urlparse
+import re
 
 import utils
 
@@ -30,6 +31,11 @@ def crawl(url:str=base_url):
         detail_url = '{}://{}{}'.format(parsed.scheme, parsed.hostname, item.a['href'])
         o['detail'] = crawl_detail(detail_url)
         o['image'] = item.a.img['src']
+
+        # 製品名から容量を推測
+        m = re.search(r'([1-9][0-9]*00)mAh', o['name'])
+        if m:
+            o['capacity'] = int(m.group(1))
 
         output.append(o)
     

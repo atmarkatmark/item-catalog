@@ -2,24 +2,25 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <h1><img src="@/assets/logo.png"/>Mobile Battery Central</h1>
+        <h1>Mobile Battery Catalog</h1>
       </v-col>
     </v-row>
 
-    <v-row class="text-center">
-      <v-col cols="12">
+    <v-row class="item-card">
+      <v-col cols="4" sm="12" md="6">
+        <ItemCard :item="selected_item"></ItemCard>
+      </v-col>
+
+      <v-col cols="8" sm="12" md="6">
+        <!-- 表部分 -->
         <v-data-table
           :headers="headers"
           :items="items"
           dark
-          items-per-page=50>
+          multi-sort
+          :items-per-page=50
+          @click:row="show_item">
         </v-data-table>
-      </v-col>
-    </v-row>
-
-    <v-row class="text-center">
-      <v-col cols="6">
-        <v-btn class="primary" @click="load">Load</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -27,12 +28,19 @@
 
 <script>
   import items from '@/assets/data.json';
+  import ItemCard from '@/components/ItemCard';
   
   export default {
     name: 'Table',
 
+    components: {
+      ItemCard
+    },
+
     data: function () {
       return {
+        selected_item: {},
+
         headers: [
           {
             text: '販売元',
@@ -53,6 +61,18 @@
             value: 'model'
           },
           {
+            text: '容量(mAh)',
+            align: 'right',
+            sortable: true,
+            value: 'capacity'
+          },
+          {
+            text: 'PD最大出力',
+            align: 'start',
+            sortable: true,
+            value: 'pd_w'
+          },
+          {
             text: '税込価格',
             align: 'right',
             sortable: true,
@@ -67,7 +87,12 @@
     methods: {
       load: function () {
         // axios.get('@/assets/data.json').then(res => console.log(res))
-        console.log(items)
+        // console.log(items)
+      },
+
+      show_item: function (item) {
+        this.selected_item = item
+        // console.log(item)
       }
     }
   }

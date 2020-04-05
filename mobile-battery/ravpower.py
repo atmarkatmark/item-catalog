@@ -37,6 +37,11 @@ def crawl(url:str=base_url):
             o['image'] = item.find('img')['src']
             o['detail'] = crawl_detail(item.a['href'])
             
+            # 製品名から容量を推測
+            m = re.search(r'([1-9][0-9]*00)mAh', o['name'])
+            if m:
+                o['capacity'] = int(m.group(1))
+
             output.append(o)
     
     return output

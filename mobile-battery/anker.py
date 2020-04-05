@@ -31,11 +31,23 @@ def crawl(url:str=base_url):
             item = item.div.span
             # JSON出力用
             o = { 'manufacture': 'Akner' }
+            
             # 製品名、製品画像
-            o['name'] = item.a.img['alt']
+            o['name'] = item.a.img['alt'].replace('Anker ', '')
             o['image'] = item.a.img['src']
             o['url'] = item.a['href']
             o['price'] = int(re.sub(r'\D', '', item.find('p', class_='price').string))
+
+            # 製品名から容量を推測(13400)
+            m = re.search(r'[1-9][0-9]*00', o['name'])
+            if m:
+                o['capacity'] = int(m.group(0))
+            
+            # USB PD最大出力の推測
+            m = re.search(r'([1-9][0-9]+)W', o['name'])
+            if m:
+                o['pd_w'] = int(m.group(1))
+            
             # 詳細
             o['detail'] = crawl_detail(o['url'])
 
